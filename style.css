@@ -10,9 +10,11 @@
 }
 
 body {
-  background-color: #87CEEB; /* Sky blue */
+  background: linear-gradient(180deg, #87CEEB 0%, #ffffff 100%);
   color: #333;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 main {
@@ -20,7 +22,6 @@ main {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #87CEEB; /* Sky blue */
     overflow: hidden;
   }
 
@@ -75,7 +76,7 @@ main {
 
 
 .road {
-  position: fixed;
+  position: absolute;
   width: clamp(600px, 80vw, 1200px);
   height: auto;
   left: -20%;
@@ -146,16 +147,19 @@ main {
 }
 
 .how-it-works {
-  position: relative;  /* Changed from fixed to relative */
+  position: relative;
+  height: 100vh; /* Make it full viewport height */
   width: 100%;
   padding: clamp(60px, 10vh, 120px) 20px;
-  background: linear-gradient(180deg, #87CEEB 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
   z-index: 2;
 }
 
 .how-it-works-content {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .how-it-works h2 {
@@ -170,8 +174,10 @@ main {
 .feature-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(20px, 4vw, 60px);
+  gap: clamp(40px, 8vw, 100px); /* Increased gap between image and text */
   align-items: center;
+  max-width: 1400px; /* Increased max-width to allow more spread */
+  margin: 0 auto;
 }
 
 .feature-text {
@@ -202,7 +208,23 @@ main {
   width: 100%;
   height: auto;
   border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.footer {
+  position: relative;
+  width: 100%;
+  padding: 30px 20px;
+  text-align: center;
+  background: transparent;
+  z-index: 2;
+}
+
+.footer p {
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.9;
+  margin: 0;
 }
 
 
