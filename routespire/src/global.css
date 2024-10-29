@@ -1,0 +1,33 @@
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #87ceeb 0%, #ffffff 100%);
+    color: #333;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+:global(*) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  :global(body) {
+    background: linear-gradient(180deg, #87ceeb 0%, #ffffff 100%);
+    color: #333;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
