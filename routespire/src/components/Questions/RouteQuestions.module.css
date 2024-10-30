@@ -179,3 +179,124 @@
   transform: scale(0.98);
   box-shadow: 0 0 10px rgba(44, 62, 80, 0.2);
 }
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+
+.backButton {
+  padding: 16px 48px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  background: transparent;
+  border: 2px solid #2c3e50;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 180px;
+}
+
+.backButton:hover {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.backButton:active {
+  transform: scale(0.98);
+}
+
+/* Style the date inputs */
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 16px !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.durationDisplay {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin: 12px 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  letter-spacing: 0.5px;
+  animation: fadeInUp 0.4s ease-out;
+  transform-origin: center;
+}
+
+
+.durationLabel {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-right: 8px;
+}
+
+.durationValue {
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+
+
+
+
+/* Update progress bar animation */
+.progressFill {
+  transition: width 0.5s ease-in-out;
+}
+
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* MEDIA QUERIES */
+@media (max-width: 480px) {
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .backButton,
+  .nextButton {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+
+  .durationDisplay {
+    font-size: 28px;
+    padding: 20px;
+  }
+}
