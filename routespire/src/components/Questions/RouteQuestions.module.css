@@ -1,3 +1,4 @@
+/* Container */
 .container {
   min-height: 100vh;
   background: linear-gradient(180deg, #87ceeb 0%, #ffffff 100%);
@@ -5,6 +6,7 @@
   flex-direction: column;
 }
 
+/* Progress Bar */
 .progressBar {
   width: 100%;
   height: 8px;
@@ -18,6 +20,7 @@
   transition: width 0.3s ease;
 }
 
+/* Content and Card */
 .content {
   max-width: 640px;
   margin: 0 auto;
@@ -47,6 +50,7 @@
   text-align: center;
 }
 
+/* Input Group  */
 .inputGroup {
   width: 100%;
   display: flex;
@@ -64,8 +68,10 @@
   color: #ef4444;
 }
 
+/* Input Field  */
 .inputWrapper {
   position: relative;
+  width: 100%;
 }
 
 .icon {
@@ -92,6 +98,7 @@
   border-color: #2c3e50;
 }
 
+/* Trip Type Button */
 .tripTypeButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -100,6 +107,9 @@
 }
 
 .tripTypeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   font-size: 18px;
   font-weight: 600;
@@ -125,9 +135,18 @@
   transform: scale(0.98);
 }
 
+/* Error Message */
 .error {
   color: #ef4444;
   text-align: center;
+}
+
+/* Navigation Buttons */
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
 }
 
 .nextButton {
@@ -180,13 +199,6 @@
   box-shadow: 0 0 10px rgba(44, 62, 80, 0.2);
 }
 
-.buttonGroup {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  width: 100%;
-}
-
 .backButton {
   padding: 16px 48px;
   font-size: 20px;
@@ -208,7 +220,7 @@
   transform: scale(0.98);
 }
 
-/* Style the date inputs */
+/* Date Input */
 input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
@@ -231,45 +243,758 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
 }
 
+/* Duration Display */
 .durationDisplay {
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin: 12px 0;
   font-size: 32px;
   font-weight: 700;
   color: #2c3e50;
-  letter-spacing: 0.5px;
+  text-align: center;
+  margin: 24px 0;
   animation: fadeInUp 0.4s ease-out;
-  transform-origin: center;
 }
 
+/* Toggle Switch */
+.endDateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
-.durationLabel {
-  font-weight: 600;
-  color: #2c3e50;
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.toggleText {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.toggle {
+  width: 44px;
+  height: 24px;
+  background-color: #e5e7eb;
+  border-radius: 12px;
+  padding: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.toggleActive {
+  background-color: #2c3e50;
+}
+
+.toggleHandle {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+.toggleActive .toggleHandle {
+  transform: translateX(20px);
+}
+
+/* Button Icon */
+.buttonIcon {
+  width: 18px;
+  height: 18px;
   margin-right: 8px;
 }
 
-.durationValue {
-  color: #2c3e50;
-  font-size: 18px;
+/* Slider */
+.sliderContainer {
+  width: 100%;
+  padding: 24px 12px;
+  margin-top: 24px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e5e7eb;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sliderValue {
+  text-align: center;
+  font-size: 32px;
   font-weight: 700;
+  color: #2c3e50;
+  margin: 24px 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* Vehicle Selection */
+.vehicleSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 
+.vehicleButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
 
+.vehicleButton {
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid #2c3e50;
+  border-radius: 12px;
+  background-color: transparent;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.vehicleActive {
+  background-color: #2c3e50;
+  color: white;
+  box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+}
 
+.vehicleButton:hover:not(.vehicleActive) {
+  background-color: rgba(44, 62, 80, 0.1);
+}
 
-/* Update progress bar animation */
+.vehicleButton:active {
+  transform: scale(0.98);
+}
+
+.mpgContainer {
+  margin-top: 32px;
+}
+
+/* Travelers Section */
+.travelersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.travelerGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.travelerGroup:hover {
+  background-color: #f1f3f5;
+}
+
+.travelerInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.travelerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  color: #2c3e50;
+}
+
+.travelerLabels {
+  display: flex;
+  flex-direction: column;
+}
+
+.travelerLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.travelerDescription {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Counter Controls */
+.counterControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.counterButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2c3e50;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.counterButton:hover {
+  background-color: #34495e;
+  transform: scale(1.05);
+}
+
+.counterButton:active {
+  transform: scale(0.95);
+}
+
+.counterButtonDisabled {
+  background-color: #ced4da;
+  cursor: not-allowed;
+}
+
+.counterButtonDisabled:hover {
+  background-color: #ced4da;
+  transform: none;
+}
+
+.counterValue {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 24px;
+  text-align: center;
+}
+
+.totalTravelers {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #e9ecef;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Stay Options */
+.staysSection {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.stayOptions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.stayOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: transparent;
+  border: 2px solid #2c3e50;
+  border-radius: 12px;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stayOption:hover:not(.stayOptionActive) {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.stayOptionActive {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.stayIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Price Range */
+.priceRangeSection {
+  width: 100%;
+  margin-top: 32px;
+  padding: 0 12px;
+}
+
+.priceRangeControls {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  margin: 48px 0 24px 0;
+}
+
+.priceSlider {
+  -webkit-appearance: none;
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  border-radius: 3px;
+  outline: none;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.priceSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 4;
+}
+
+.priceSlider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: none;
+  z-index: 4;
+}
+
+.priceSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.priceSlider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.priceTrack {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.priceRange {
+  position: absolute;
+  height: 6px;
+  background: #87ceeb;
+  z-index: 2;
+}
+
+.priceDots {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.priceDot {
+  width: 12px;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 50%;
+  margin: -3px;
+  z-index: 3;
+}
+
+.priceDotActive {
+  background: #87ceeb;
+}
+
+.priceLabels {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding: 0 8px;
+}
+
+.priceLabel {
+  font-size: 14px;
+  color: #6b7280;
+  text-align: center;
+  transform: translateX(-50%);
+  position: absolute;
+}
+
+.priceLabel:first-child {
+  transform: translateX(0);
+}
+
+.priceLabel:last-child {
+  transform: translateX(-100%);
+}
+
+/* Food Options */
+.foodSection {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.foodOptions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.foodOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: transparent;
+  border: 2px solid #2c3e50;
+  border-radius: 12px;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.foodOption:hover:not(.foodOptionActive) {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.foodOptionActive {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.foodIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Activities Section */
+.activitiesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.activityOptions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.activityOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: transparent;
+  border: 2px solid #2c3e50;
+  border-radius: 12px;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activityOption:hover:not(.activityOptionActive) {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.activityOptionActive {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.activityIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom Activity */
+.customActivitySection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.addActivityButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addActivityButton:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.addActivityButton:hover:not(:disabled) {
+  background-color: #34495e;
+}
+
+.userActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activityTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.activityTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #e5e7eb;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.removeActivityButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.removeActivityButton:hover {
+  color: #ef4444;
+}
+
+/* Suggestions Dropdown */
+.suggestionsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestionItem {
+  width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2c3e50;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.suggestionItem:hover {
+  background-color: #f3f4f6;
+}
+
+.suggestionItem:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.suggestionsDropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.suggestionsDropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 0 12px 0;
+}
+
+.suggestionsDropdown::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.suggestionsDropdown::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Additional Info Section */
+.additionalInfoSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.textareaWrapper {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  outline: none;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  height: 160px;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.textarea:focus {
+  border-color: #2c3e50;
+}
+
+.textarea::placeholder {
+  color: #9ca3af;
+}
+
+.optional {
+  color: #6b7280;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Number Input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Progress Bar Animation */
 .progressFill {
-  transition: width 0.5s ease-in-out;
+  height: 100%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #2c3e50;
 }
 
-
-/* ANIMATIONS */
+/* Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -281,8 +1006,37 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   }
 }
 
+/* Media Queries */
+@media (max-width: 640px) {
+  .endDateHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 
-/* MEDIA QUERIES */
+  .toggleWrapper {
+    margin-left: 0;
+  }
+
+  .stayOptions,
+  .foodOptions,
+  .activityOptions {
+    grid-template-columns: 1fr;
+  }
+
+  .activityTag {
+    font-size: 12px;
+  }
+
+  .textarea {
+    font-size: 14px;
+  }
+
+  .hint {
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 480px) {
   .buttonGroup {
     flex-direction: column;
@@ -298,5 +1052,16 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   .durationDisplay {
     font-size: 28px;
     padding: 20px;
+  }
+
+  .travelerGroup {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .counterControls {
+    width: 100%;
+    justify-content: center;
   }
 }
