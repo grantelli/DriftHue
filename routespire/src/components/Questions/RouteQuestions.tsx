@@ -26,9 +26,13 @@ import {
   Music,
   GraduationCap, 
   Heart, 
-  Plus as PlusIcon
+  Plus as PlusIcon,
+  ArrowLeft,
+  ArrowRight,
+  Compass
 } from 'lucide-react';
 import styles from './RouteQuestions.module.css';
+import { useNavigate } from 'react-router-dom';
 
 // Interfaces for data structures
 interface TravelerGroup {
@@ -57,6 +61,9 @@ interface ActivityOption {
 }
 
 function RouteQuestions() {
+  // Navigation
+  const navigate = useNavigate();
+
   // Step control state
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -147,10 +154,10 @@ function RouteQuestions() {
     "Cooking Classes", "Cultural Festivals", "Cycling", "Dining", "Farm Visits",
     "Fishing", "Filming", "Food Tours", "Golfing", "Hiking",
     "Historical Monuments", "Historical Sites", "Horseback Riding", "Hot Air Ballooning", "Jet Skiing",
-    "Kayaking", "Lighthouses", "Live Music", "Local Markets", "Mountain Biking",
+    "Kayaking", "Lighthouses", "Live Music", "Local Markets", "Longboarding", "Mountain Biking",
     "Museums", "Music", "National Forests", "National Parks", "Picnicking",
     "Photography", "Rafting", "Roadside Attractions", "Rock Climbing", "Running",
-    "Scenic Drives", "Shopping", "Sightseeing", "Small Towns", "Snowboarding",
+    "Scenic Drives", "Shopping", "Sightseeing", "Skating", "Skateboarding", "Small Towns", "Snowboarding",
     "Skiing", "Spas", "Sports Events", "Stargazing", "Stand-Up Paddleboarding",
     "Surfing", "Swimming", "Theater Performances", "Theme Parks", "Tours",
     "Visiting Waterfalls", "Whale Watching", "Wildlife Watching", "Wine Tasting", "Yoga",
@@ -171,26 +178,31 @@ function RouteQuestions() {
 
   // Handle change in start date input
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = new Date(e.target.value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time portion to compare dates only
+    const inputValue = e.target.value;
+    setStartDate(inputValue);
   
-    if (selectedDate < today) {
-      setError('Start date cannot be earlier than today');
-      return;
-    }
+    // Only validate if we have a complete date (if the input is filled)
+    if (inputValue.length === 10) { // YYYY-MM-DD format is always 10 characters
+      const selectedDate = new Date(inputValue);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Reset time portion to compare dates only
   
-    setStartDate(e.target.value);
-    // Clear end date if it's now invalid
-    if (endDate) {
-      const end = new Date(endDate);
-      const maxDate = new Date(selectedDate);
-      maxDate.setDate(maxDate.getDate() + 60);
-      if (end <= selectedDate || end > maxDate) {
-        setEndDate('');
+      if (selectedDate < today) {
+        setError('Start date cannot be earlier than today');
+        return;
       }
+  
+      // Clear end date if it's now invalid
+      if (endDate) {
+        const end = new Date(endDate);
+        const maxDate = new Date(selectedDate);
+        maxDate.setDate(maxDate.getDate() + 60);
+        if (end <= selectedDate || end > maxDate) {
+          setEndDate('');
+        }
+      }
+      setError('');
     }
-    setError('');
   };
 
   // Handle change in end date input
@@ -332,6 +344,25 @@ function RouteQuestions() {
     setFoodPriceRange(newRange);
   };
 
+  const handleGenerateTrip = () => {
+    console.log('Generating trip...', {
+      startLocation,
+      endLocation,
+      isRoundTrip,
+      startDate,
+      endDate,
+      strictEndDate,
+      stayType: selectedStayType,
+      stayBudget: priceRange,
+      foodType: selectedFoodType,
+      foodBudget: foodPriceRange,
+      activities: [...selectedActivities, ...userActivities],
+      activityBudget: activityPriceRange,
+      additionalInfo
+    });
+    // Add actual generation logic here
+  };
+
   // Proceed to next step with validation
   const handleNext = () => {
     if (currentStep === 1) {
@@ -382,8 +413,8 @@ function RouteQuestions() {
       setError('');
       setCurrentStep(4);
     } else if (currentStep === 4) {
-      if (mpg < 1 || mpg > 150) {
-        setError('Please enter a valid MPG between 1 and 150');
+      if (mpg < 1 || mpg > 200) {
+        setError('Please enter a valid MPG between 1 and 200');
         return;
       }
       setError('');
@@ -419,27 +450,7 @@ function RouteQuestions() {
     } else if (currentStep === 9) {
       // No validation needed as this section is optional
       setError('');
-      // Handle final submission with all data
-      console.log({
-        startLocation,
-        endLocation,
-        isRoundTrip,
-        startDate,
-        endDate,
-        driveLimitUnit,
-        driveLimit,
-        vehicleType,
-        mpg,
-        travelers,
-        selectedStayType,
-        priceRange,
-        selectedFoodType,
-        foodPriceRange,
-        selectedActivities,
-        userActivities,
-        activityPriceRange,
-        additionalInfo
-      });
+      setCurrentStep(10);
     }
   };
 
@@ -470,9 +481,15 @@ function RouteQuestions() {
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      const diffTime = Math.abs(end.getTime() - start.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      setDuration(diffDays);
+      
+      // Only calculate and show duration if end date is after start date
+      if (end > start) {
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        setDuration(diffDays);
+      } else {
+        setDuration(null);  // Clear duration if dates are invalid
+      }
     } else {
       setDuration(null);
     }
@@ -698,8 +715,16 @@ return (
                       type="number"
                       min="1"
                       max="150"
-                      value={mpg}
-                      onChange={(e) => setMpg(Number(e.target.value))}
+                      value={mpg || ''} // Use empty string when mpg is 0
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setMpg(value === '' ? 0 : Number(value));
+                      }}
+                      onBlur={(e) => {
+                        if (e.target.value === '' || Number(e.target.value) === 0) {
+                          setMpg(0);
+                        }
+                      }}
                       placeholder="Enter your vehicle's MPG"
                       className={styles.input}
                     />
@@ -1048,7 +1073,7 @@ return (
               </div>
             </div>
           </>
-        ) : (
+        ) : currentStep === 9 ? (
           <>
             {/* Step 9: Additional information */}
             <h1 className={styles.title}>Any additional information?</h1>
@@ -1075,6 +1100,81 @@ return (
               </div>
             </div>
           </>
+        ) : (
+          <>
+          <h1 className={styles.title}>Your trip is almost ready!</h1>
+          <p className={styles.subtitle}>
+            You can adjust your stops, dates, locations, budget, and more after viewing the generated trip.
+          </p>
+
+          <div className={styles.previewCard}>
+            <div className={styles.imageContainer}>
+              <div className={styles.imagePlaceholder}>
+                <MapPin size={48} />
+              </div>
+              
+              <div className={styles.tripTypeOverlay}>
+                <h2 className={styles.destinationTitle}>{endLocation} Trip</h2>
+                <span className={styles.tripType}>{isRoundTrip ? 'Round Trip' : 'One-Way'}</span>
+              </div>
+            </div>
+
+            <div className={styles.tripDetails}>
+              <div className={styles.detailItem}>
+                <Calendar className={styles.detailIcon} />
+                <div className={styles.detailContent}>
+                  <h3>When</h3>
+                  <p>{new Date(startDate).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })} - {new Date(endDate).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}{!strictEndDate && ' (Flexible)'}</p>
+                </div>
+              </div>
+
+              <div className={styles.detailItem}>
+                <MapPin className={styles.detailIcon} />
+                <div className={styles.detailContent}>
+                  <h3>Where</h3>
+                  <p>From {startLocation} to {endLocation}</p>
+                </div>
+              </div>
+
+              <div className={styles.detailItem}>
+                <Hotel className={styles.detailIcon} />
+                <div className={styles.detailContent}>
+                  <h3>Stay</h3>
+                  <p>{selectedStayType} • {priceRange[0] === 0 ? 'Free' : '$'.repeat(priceRange[0])}-{
+                    '$'.repeat(priceRange[1])}</p>
+                </div>
+              </div>
+
+              <div className={styles.detailItem}>
+                <Utensils className={styles.detailIcon} />
+                <div className={styles.detailContent}>
+                  <h3>Eat</h3>
+                  <p>{selectedFoodType} • {'$'.repeat(foodPriceRange[0])}-{'$'.repeat(foodPriceRange[1])}</p>
+                </div>
+              </div>
+
+              <div className={styles.detailItem}>
+                <Compass className={styles.detailIcon} />
+                <div className={styles.detailContent}>
+                  <h3>Do</h3>
+                  <p className={styles.activities}>
+                    {[...selectedActivities, ...userActivities].join(' • ')} • {
+                      activityPriceRange[0] === 0 ? 'Free' : '$'.repeat(activityPriceRange[0])}-{
+                      '$'.repeat(activityPriceRange[1])}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
         )}
 
         {/* Display error message if any */}
@@ -1083,22 +1183,42 @@ return (
         )}
 
         {/* Navigation buttons */}
-        <div className={styles.buttonGroup}>
-          {currentStep > 1 && (
+        {currentStep === 10 ? (
+          <div className={styles.finalStepButtons}>
+            <button
+              onClick={handleGenerateTrip}
+              className={styles.nextButton}
+            >
+              Generate Trip
+            </button>
             <button
               onClick={handleBack}
               className={styles.backButton}
             >
-              Back
+              <ArrowLeft className={styles.buttonIcon} />
+              Make Changes
             </button>
-          )}
-          <button
-            onClick={handleNext}
-            className={styles.nextButton}
-          >
-            Continue
-          </button>
-        </div>
+          </div>
+        ) : (
+          <div className={styles.buttonGroup}>
+            {currentStep > 1 && (
+              <button
+                onClick={handleBack}
+                className={styles.backButton}
+              >
+                <ArrowLeft className={styles.buttonIcon} />
+                Back
+              </button>
+            )}
+            <button
+              onClick={handleNext}
+              className={styles.nextButton}
+            >
+              Next
+              <ArrowRight className={styles.buttonIcon} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   </div>
