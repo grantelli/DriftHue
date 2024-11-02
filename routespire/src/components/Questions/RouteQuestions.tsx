@@ -73,11 +73,26 @@ function RouteQuestions() {
   const [endLocation, setEndLocation] = useState('');
   const [isRoundTrip, setIsRoundTrip] = useState(true);
 
+  // Format Location
+  const formatLocation = (location: string): string => {
+    if (!location) return '';
+    
+    // Split the address into parts
+    const parts = location.split(',').map(part => part.trim());
+    
+    // Return just the first part (usually the city name)
+    // If it's a state without a city, it will return the state
+    return parts[0];
+  };
+
   // Date and duration state
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [strictEndDate, setStrictEndDate] = useState(true);
   const [duration, setDuration] = useState<number | null>(null);
+
+  const [isStartLocationValid, setIsStartLocationValid] = useState(false);
+  const [isEndLocationValid, setIsEndLocationValid] = useState(false);
 
   // Driving limit state
   const [driveLimitUnit, setDriveLimitUnit] = useState<'hours' | 'miles'>('hours');
@@ -371,6 +386,14 @@ function RouteQuestions() {
         setError('Please enter a starting location');
         return;
       }
+      if (!isStartLocationValid) {
+        setError('Please select a valid starting location');
+        return;
+      }
+      if (endLocation.trim() && !isEndLocationValid) {
+        setError('Please select a valid destination');
+        return;
+      }
       setError('');
       setCurrentStep(2);
     } else if (currentStep === 2) {
@@ -501,6 +524,50 @@ function RouteQuestions() {
     setDriveLimit(driveLimitUnit === 'hours' ? 6 : 400);
   }, [driveLimitUnit]);
 
+  // Location Autofill
+  useEffect(() => {
+    const startInput = document.querySelector('input[placeholder="Enter city or address"]') as HTMLInputElement;
+    const endInput = document.querySelector('input[placeholder="Enter city or address (optional)"]') as HTMLInputElement;
+  
+    if (startInput && window.google) {
+      const startAutocomplete = new window.google.maps.places.Autocomplete(startInput, {
+        types: ['(cities)']
+      });
+      
+      // When user types manually, location becomes invalid
+      startInput.addEventListener('input', () => {
+        setIsStartLocationValid(false);
+      });
+  
+      startAutocomplete.addListener('place_changed', () => {
+        const place = startAutocomplete.getPlace();
+        if (place?.formatted_address) {
+          setStartLocation(place.formatted_address);
+          setIsStartLocationValid(true);
+        }
+      });
+    }
+  
+    if (endInput && window.google) {
+      const endAutocomplete = new window.google.maps.places.Autocomplete(endInput, {
+        types: ['(cities)']
+      });
+      
+      // When user types manually, location becomes invalid
+      endInput.addEventListener('input', () => {
+        setIsEndLocationValid(false);
+      });
+  
+      endAutocomplete.addListener('place_changed', () => {
+        const place = endAutocomplete.getPlace();
+        if (place?.formatted_address) {
+          setEndLocation(place.formatted_address);
+          setIsEndLocationValid(true);
+        }
+      });
+    }
+  }, []);
+
 // Return statement rendering the component UI
 return (
   <div className={styles.container}>
@@ -523,7 +590,7 @@ return (
               <label className={styles.label}>
                 Starting Location <span className={styles.required}>*</span>
               </label>
-              <div className={styles.inputWrapper}>
+              <div className={`${styles.inputWrapper} ${startLocation && (isStartLocationValid ? styles.validLocation : styles.invalidLocation)}`}>
                 <MapPin className={styles.icon} />
                 <input
                   type="text"
@@ -539,7 +606,7 @@ return (
               <label className={styles.label}>
                 Destination
               </label>
-              <div className={styles.inputWrapper}>
+              <div className={`${styles.inputWrapper} ${endLocation && (isEndLocationValid ? styles.validLocation : styles.invalidLocation)}`}>
                 <MapPin className={styles.icon} />
                 <input
                   type="text"
@@ -1118,7 +1185,7 @@ return (
             }}
           >
             <div className={styles.tripTypeOverlay}>
-              <h2 className={styles.destinationTitle}>{endLocation} Trip</h2>
+              <h2 className={styles.destinationTitle}>{formatLocation(endLocation)} Trip</h2>
               <span className={styles.tripType}>{isRoundTrip ? 'Round Trip' : 'One-Way'}</span>
             </div>
           </div>
@@ -1144,7 +1211,7 @@ return (
               <MapPin className={styles.detailIcon} />
               <div className={styles.detailContent}>
                 <h3>Where</h3>
-                <p>From {startLocation} to {endLocation}</p>
+                <p>From {formatLocation(startLocation)} to {formatLocation(endLocation)}</p>
               </div>
             </div>
 

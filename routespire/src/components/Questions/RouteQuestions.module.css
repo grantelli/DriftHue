@@ -220,6 +220,22 @@
   transform: scale(0.98);
 }
 
+.invalidLocation {
+  border-color: #ef4444 !important;
+}
+
+.validLocation input,
+.invalidLocation input {
+  border-color: inherit;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
 /* Date Input */
 input[type="date"] {
   appearance: none;

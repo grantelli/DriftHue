@@ -31,3 +31,42 @@ body {
     margin: 0;
     padding: 0;
   }
+
+/* Target Google's autofomplete elements directly */
+.pac-container {
+  font-family: 'Poppins', sans-serif !important;
+  border-radius: 0 0 12px 12px !important;
+  border: 2px solid #e5e7eb !important;
+  border-top: none !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  margin-top: -2px !important;
+  background-color: white !important;
+}
+
+.pac-item {
+  padding: 8px 16px !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.pac-item-query {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  color: #2c3e50 !important;
+  padding-right: 8px !important;
+}
+
+.pac-item span:not(.pac-item-query) {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  color: #6b7280 !important;
+}
+
+.pac-item:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.pac-item-selected {
+  background-color: #f3f4f6 !important;
+}
