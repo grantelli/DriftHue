@@ -997,19 +997,18 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   position: relative;
   width: 100%;
   height: 200px;
-  background-color: #2c3e50;
   border-radius: 12px;
-  margin-top: 20px;
+  overflow: hidden;
 }
 
-.imagePlaceholder {
+/* .imagePlaceholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.2);
-}
+} */
 
 .tripTypeOverlay {
   position: absolute;
@@ -1023,13 +1022,13 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .destinationTitle {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   margin-bottom: 4px;
 }
 
 .tripType {
-  font-size: 16px;
+  font-size: 18px;
   opacity: 0.9;
 }
 
@@ -1044,12 +1043,16 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  padding: 4px 0;
 }
 
 .detailIcon {
+  width: 24px;
+  height: 24px;
   color: #2c3e50;
   opacity: 0.8;
   flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .detailContent {
@@ -1057,16 +1060,16 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .detailContent h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #6b7280;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .detailContent p {
-  font-size: 16px;
+  font-size: 18px;
   color: #2c3e50;
   line-height: 1.5;
 }

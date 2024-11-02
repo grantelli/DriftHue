@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import road1 from '../../assets/road1.png';
 import { 
   MapPin, 
   Calendar, 
@@ -1108,71 +1109,98 @@ return (
           </p>
 
           <div className={styles.previewCard}>
-            <div className={styles.imageContainer}>
-              <div className={styles.imagePlaceholder}>
-                <MapPin size={48} />
-              </div>
-              
-              <div className={styles.tripTypeOverlay}>
-                <h2 className={styles.destinationTitle}>{endLocation} Trip</h2>
-                <span className={styles.tripType}>{isRoundTrip ? 'Round Trip' : 'One-Way'}</span>
+          <div 
+            className={styles.imageContainer}
+            style={{ 
+              backgroundImage: `url(${road1})`, 
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className={styles.tripTypeOverlay}>
+              <h2 className={styles.destinationTitle}>{endLocation} Trip</h2>
+              <span className={styles.tripType}>{isRoundTrip ? 'Round Trip' : 'One-Way'}</span>
+            </div>
+          </div>
+
+          <div className={styles.tripDetails}>
+            <div className={styles.detailItem}>
+              <Calendar className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>When</h3>
+                <p>{new Date(startDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })} - {new Date(endDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}{!strictEndDate && ' (Flexible)'}</p>
               </div>
             </div>
 
-            <div className={styles.tripDetails}>
-              <div className={styles.detailItem}>
-                <Calendar className={styles.detailIcon} />
-                <div className={styles.detailContent}>
-                  <h3>When</h3>
-                  <p>{new Date(startDate).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  })} - {new Date(endDate).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  })}{!strictEndDate && ' (Flexible)'}</p>
-                </div>
-              </div>
-
-              <div className={styles.detailItem}>
-                <MapPin className={styles.detailIcon} />
-                <div className={styles.detailContent}>
-                  <h3>Where</h3>
-                  <p>From {startLocation} to {endLocation}</p>
-                </div>
-              </div>
-
-              <div className={styles.detailItem}>
-                <Hotel className={styles.detailIcon} />
-                <div className={styles.detailContent}>
-                  <h3>Stay</h3>
-                  <p>{selectedStayType} • {priceRange[0] === 0 ? 'Free' : '$'.repeat(priceRange[0])}-{
-                    '$'.repeat(priceRange[1])}</p>
-                </div>
-              </div>
-
-              <div className={styles.detailItem}>
-                <Utensils className={styles.detailIcon} />
-                <div className={styles.detailContent}>
-                  <h3>Eat</h3>
-                  <p>{selectedFoodType} • {'$'.repeat(foodPriceRange[0])}-{'$'.repeat(foodPriceRange[1])}</p>
-                </div>
-              </div>
-
-              <div className={styles.detailItem}>
-                <Compass className={styles.detailIcon} />
-                <div className={styles.detailContent}>
-                  <h3>Do</h3>
-                  <p className={styles.activities}>
-                    {[...selectedActivities, ...userActivities].join(' • ')} • {
-                      activityPriceRange[0] === 0 ? 'Free' : '$'.repeat(activityPriceRange[0])}-{
-                      '$'.repeat(activityPriceRange[1])}
-                  </p>
-                </div>
+            <div className={styles.detailItem}>
+              <MapPin className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>Where</h3>
+                <p>From {startLocation} to {endLocation}</p>
               </div>
             </div>
+
+            <div className={styles.detailItem}>
+              <Users className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>Who</h3>
+                <p>{getTotalTravelers()} {getTotalTravelers() === 1 ? 'Traveler' : 'Travelers'}</p>
+              </div>
+            </div>
+
+            <div className={styles.detailItem}>
+              <Hotel className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>Stay</h3>
+                <p>{selectedStayType === 'popular' ? 'Most Popular Places' : stayOptions.find(opt => opt.id === selectedStayType)?.label} • {
+                  priceRange[0] === 0 ? 'Free' : 
+                  (priceRange[0] === priceRange[1] ? 
+                    '$'.repeat(priceRange[0]) : 
+                    `${'$'.repeat(priceRange[0])}-${'$'.repeat(priceRange[1])}`)
+                }</p>
+              </div>
+            </div>
+
+            <div className={styles.detailItem}>
+              <Utensils className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>Eat</h3>
+                <p>{selectedFoodType === 'popular' ? 'Most Popular Places' : foodOptions.find(opt => opt.id === selectedFoodType)?.label} • {
+                  foodPriceRange[0] === foodPriceRange[1] ? 
+                    '$'.repeat(foodPriceRange[0] + 1) : 
+                    `${'$'.repeat(foodPriceRange[0] + 1)}-${'$'.repeat(foodPriceRange[1] + 1)}`
+                }</p>
+              </div>
+            </div>
+
+            <div className={styles.detailItem}>
+              <Compass className={styles.detailIcon} />
+              <div className={styles.detailContent}>
+                <h3>Do</h3>
+                <p className={styles.activities}>
+                  {selectedActivities.includes('popular') ? 'Most Popular Activities' : 
+                    [...selectedActivities.map(id => 
+                      activityOptions.find(opt => opt.id === id)?.label
+                    ), ...userActivities]
+                    .filter(Boolean)
+                    .join(' • ')
+                  } • {
+                    activityPriceRange[0] === 0 ? 'Free' : 
+                    (activityPriceRange[0] === activityPriceRange[1] ? 
+                      '$'.repeat(activityPriceRange[0]) : 
+                      `${'$'.repeat(activityPriceRange[0])}-${'$'.repeat(activityPriceRange[1])}`)
+                  }</p>
+              </div>
+            </div>
+          </div>
           </div>
         </>
         )}
